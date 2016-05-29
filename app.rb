@@ -15,19 +15,24 @@ puts "| |                                       "
 puts "|_|                                       "
 
 
-def calculate_purchases(toy)
+def calculate_purchases(toy, price)
   count = 0
-  toy["purchases"].each do |amount|
-    puts amount['price']
+  num = 0 
+  toy.each do |amount|
+    count +=  amount['price'].to_f
+    num += 1
   end
-  return count
+  avg = count/num
+  dis =  price.to_f - avg
+  return count.to_s, num.to_s, avg.to_s, dis.to_s
+end
+products_hash["items"].each do |toy|
+  price = toy["full-price"]
+  result = calculate_purchases(toy["purchases"], price)
+  puts "#{toy["title"]} retail:#{price} num sold:#{result[1]} total sales:#{result[0]} avg: #{result[2]} avg_discount: #{'%.2f' % result[3]}"
 end
 # For each product in the data set:
   # Print the name of the toy
-products_hash["items"].each do |toy|
-  puts toy["title"] + " " + toy["full-price"] 
-end
-  puts products_hash["items"][0]
   # Print the retail price of the toy
   # Calculate and print the total number of purchases
   # Calculate and print the total amount of sales
